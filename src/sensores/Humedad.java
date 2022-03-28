@@ -1,7 +1,5 @@
 package sensores;
 
-public class Humedad {
-
-	private Double hectopascal;
+public record Humedad(Double hectopascal) {
 
 }

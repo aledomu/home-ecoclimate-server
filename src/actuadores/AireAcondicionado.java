@@ -1,8 +1,5 @@
 package actuadores;
 
-public class AireAcondicionado {
-
-	private Integer intensidadEnfriamiento;
-	private Integer velocidadVentilacion;
+public record AireAcondicionado(Integer intensidadEnfriamiento, Integer velocidadVentilacion) {
 
 }

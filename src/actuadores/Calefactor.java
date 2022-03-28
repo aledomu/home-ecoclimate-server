@@ -1,7 +1,5 @@
 package actuadores;
 
-public class Calefactor {
-
-	private Integer grados;
+public record Calefactor(Integer grados) {
 
 }

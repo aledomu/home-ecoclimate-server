@@ -1,7 +1,5 @@
 package actuadores;
 
-public class Toldo {
-
-	private Integer extension;
+public record Toldo(Integer extension) {
 
 }

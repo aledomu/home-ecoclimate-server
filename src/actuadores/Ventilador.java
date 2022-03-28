@@ -1,7 +1,5 @@
 package actuadores;
 
-public class Ventilador {
-
-	private Integer velocidad;
+public record Ventilador(Integer velocidad) {
 
 }

@@ -1,7 +1,5 @@
 package actuadores;
 
-public class Persiana {
-
-	private Integer angulo;
+public record Persiana(Integer angulo) {
 
 }

@@ -1,7 +1,5 @@
 package actuadores;
 
-public class EnfriadorVaporAgua {
-
-	private Integer intensidad;
+public record EnfriadorVaporAgua(Integer intensidad) {
 
 }
