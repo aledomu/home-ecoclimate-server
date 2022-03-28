@@ -1,5 +1,5 @@
 package sensores;
 
-public record Humedad(Double hectopascal) {
+public record Humedad(double hectopascal) {
 
 }

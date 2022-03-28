@@ -1,5 +1,5 @@
 package actuadores;
 
-public record Calefactor(Integer grados) {
+public record Calefactor(int grados) {
 
 }

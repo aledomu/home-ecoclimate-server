@@ -1,5 +1,5 @@
 package actuadores;
 
-public record Ventilador(Integer velocidad) {
+public record Ventilador(int velocidad) {
 
 }

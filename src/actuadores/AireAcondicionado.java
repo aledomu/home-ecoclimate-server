@@ -1,5 +1,5 @@
 package actuadores;
 
-public record AireAcondicionado(Integer intensidadEnfriamiento, Integer velocidadVentilacion) {
+public record AireAcondicionado(int intensidadEnfriamiento, int velocidadVentilacion) {
 
 }

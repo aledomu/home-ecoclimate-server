@@ -1,5 +1,5 @@
 package sensores;
 
-public record Temperatura(Double celcius) {
+public record Temperatura(double celcius) {
 
 }

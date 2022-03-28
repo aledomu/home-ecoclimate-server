@@ -1,5 +1,5 @@
 package actuadores;
 
-public record EnfriadorVaporAgua(Integer intensidad) {
+public record EnfriadorVaporAgua(int intensidad) {
 
 }
