@@ -1,2 +1,0 @@
-module home_ecoclimate {
-}
