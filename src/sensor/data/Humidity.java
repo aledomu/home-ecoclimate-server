@@ -1,4 +1,6 @@
-package sensor;
+package sensor.data;
+
+import sensor.common.Entry;
 
 public final class Humidity extends Entry {
 	

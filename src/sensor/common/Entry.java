@@ -1,4 +1,4 @@
-package sensor;
+package sensor.common;
 
 import java.util.Objects;
 
