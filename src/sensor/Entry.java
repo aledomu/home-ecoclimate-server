@@ -1,14 +1,14 @@
-package sensores;
+package sensor;
 
 import java.util.Objects;
 
-public abstract class Entrada {
+public abstract class Entry {
 	
 	abstract public String id();
-	abstract public long tiempo();
+	abstract public long time();
 	
 	final public int hashCode() {
-		return Objects.hash(id(), tiempo());
+		return Objects.hash(id(), time());
 	}
 	
 	final public boolean equals(Object obj) {
@@ -18,8 +18,8 @@ public abstract class Entrada {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Entrada other = (Entrada) obj;
-		return Objects.equals(id(), other.id()) && tiempo() == other.tiempo();
+		Entry other = (Entry) obj;
+		return Objects.equals(id(), other.id()) && time() == other.time();
 	}
 	
 }
