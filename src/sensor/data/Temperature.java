@@ -4,9 +4,9 @@ import sensor.common.Entry;
 
 public final class Temperature extends Entry {
 	
-	String id;
-	long time;
-	double celcius;
+	private String id;
+	private long time;
+	private double celcius;
 	
 	public Temperature(String id, long time, double celcius) {
 		super();
