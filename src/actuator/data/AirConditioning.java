@@ -4,9 +4,9 @@ import actuator.common.Action;
 
 public final class AirConditioning extends Action {
 	
-	private final String id;
-	private final int tempChangeIndex;  // puede ser negativo
-	private final int ventilationSpeed;
+	private String id;
+	private int tempChangeIndex;  // puede ser negativo
+	private int ventilationSpeed;
 	
 	public AirConditioning(String id, int tempChangeIndex, int ventilationSpeed) {
 		super();

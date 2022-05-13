@@ -4,8 +4,8 @@ import actuator.common.Action;
 
 public final class WindowBlind extends Action {
 	
-	private final String id;
-	private final int angle;
+	private String id;
+	private int angle;
 	
 	public WindowBlind(String id, int angle) {
 		super();
