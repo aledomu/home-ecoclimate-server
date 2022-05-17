@@ -23,7 +23,10 @@ public class Server extends AbstractVerticle {
 		Router router = Router.router(getVertx());
 		
 		for (ResourceHandler<?> h : toPublish) {
-			router.mountSubRouter("/" + h.resourceName(), h.getRouter(getVertx()));
+			router.mountSubRouter(
+				"/" + h.resourceName().toLowerCase(),
+				h.getRouter(getVertx())
+			);
 		}
 
 		getVertx()
