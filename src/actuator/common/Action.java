@@ -2,8 +2,15 @@ package actuator.common;
 
 import java.util.Objects;
 
+/**
+ * Clase abstracta que indica los métodos estándar mínimos de cualquier mensaje
+ * para activar cualquier actuador de la placa.
+ */
 public abstract class Action {
 
+	/**
+	 * @return identificador del sensor que recibe el mensaje de acción.
+	 */
 	abstract public String id();
 	
 	final public int hashCode() {

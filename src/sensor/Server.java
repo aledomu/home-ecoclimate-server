@@ -7,6 +7,11 @@ import sensor.common.ResourceHandler;
 import sensor.data.Humidity;
 import sensor.data.pools.LocalNonPersistent;
 
+/**
+ * Esta clase crea un subrouter por cada tipo de recurso y los une a la raíz
+ * de las rutas de la API con el nombre de la clase del tipo de recurso en
+ * minúscula como prefijo. 
+ */
 public class Server extends AbstractVerticle {
 	
 	private static ResourceHandler<?>[] toPublish = {

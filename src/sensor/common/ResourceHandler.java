@@ -13,6 +13,12 @@ import io.vertx.ext.web.Router;
 import io.vertx.ext.web.RoutingContext;
 import io.vertx.ext.web.handler.BodyHandler;
 
+/**
+ * Administrador de la API REST junto con la base de datos para cualquier recurso
+ * que represente la serie de datos de un sensor.
+ * 
+ * @param <T> Cualquier recurso que represente un tipo de sensor
+ */
 public class ResourceHandler<T extends Entry> {
 
 	final private Class<T> resource;
@@ -26,6 +32,30 @@ public class ResourceHandler<T extends Entry> {
 		this.resource = resource;
 	}
 	
+	/**
+	 * Configura una estructura de routing para el recurso <b>T</b>
+	 * con la siguiente estructura:
+	 * <ul>
+	 * <li>
+	 * <b>GET /</b> => Recolectar todos los registros de este recurso.
+	 * </li>
+	 * <li>
+	 * <b>GET /:id</b> => Recolectar todos los registros de este recurso
+	 * con el identificador indicado.
+	 * </li>
+	 * <li>
+	 * <b>GET /:id/:time</b> => Devolver el registro de este recurso
+	 * con el identificador y la marca de tiempo indicados.
+	 * Debe ser único.
+	 * </li>
+	 * <li>
+	 * <b>POST /</b> => Añadir un registro del tipo <b>T</b>.
+	 * </li>
+	 * </ul>
+	 * 
+	 * @param vertx Instancia de Vert.X desde la que configurar el router
+	 * @return Estructura de routing con los handlers ya configurados
+	 */
 	public Router getRouter(Vertx vertx) {
 		Router router = Router.router(vertx);
 		router.route("/*").handler(BodyHandler.create());
@@ -37,6 +67,9 @@ public class ResourceHandler<T extends Entry> {
 		return router;
 	}
 	
+	/**
+	 * @return El nombre del tipo de recurso <b>T</b>
+	 */
 	public String resourceName() {
 		return resource.getSimpleName();
 	}

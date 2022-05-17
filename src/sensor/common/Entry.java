@@ -2,9 +2,19 @@ package sensor.common;
 
 import java.util.Objects;
 
+/**
+ * Clase abstracta que indica los métodos estándar mínimos de cualquier registro
+ * de un sensor de la placa.
+ */
 public abstract class Entry {
 	
+	/**
+	 * @return identificador del sensor que envía la entrada al registro.
+	 */
 	abstract public String id();
+	/**
+	 * @return marca de tiempo de la entrada del registro enviada por el sensor.
+	 */
 	abstract public long time();
 	
 	final public int hashCode() {
