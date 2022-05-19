@@ -27,6 +27,14 @@ public final class Temperature extends Entry {
 		return celcius;
 	}
 	
+	public String asSQLInsertQuery(String tableName) {
+		return "INSERT INTO " + tableName
+			+ " VALUES ('"
+			+ id() + "', "
+			+ time() + ", "
+			+ celcius() + ");";
+	}
+	
 	@Override
 	public String toString() {
 		return "Temperatura [id=" + id + ", time=" + time + ", celcius=" + celcius + "]";

@@ -26,6 +26,14 @@ public final class Humidity extends Entry {
 	public double hectopascal() {
 		return hectopascal;
 	}
+	
+	public String asSQLInsertQuery(String tableName) {
+		return "INSERT INTO " + tableName
+			+ " VALUES ('"
+			+ id() + "', "
+			+ time() + ", "
+			+ hectopascal() + ");";
+	}
 
 	@Override
 	public String toString() {

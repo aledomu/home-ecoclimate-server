@@ -17,6 +17,11 @@ public abstract class Entry {
 	 */
 	abstract public long time();
 	
+	/**
+	 * @return Consulta de MySQL para insertar este registro en la base de datos.
+	 */
+	abstract public String asSQLInsertQuery(String tableName);
+	
 	final public int hashCode() {
 		return Objects.hash(id(), time());
 	}
