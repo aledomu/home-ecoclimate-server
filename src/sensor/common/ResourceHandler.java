@@ -7,6 +7,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonSyntaxException;
 
+import io.vertx.core.Future;
 import io.vertx.core.Vertx;
 import io.vertx.core.http.HttpServerResponse;
 import io.vertx.ext.web.Router;
@@ -74,63 +75,74 @@ public class ResourceHandler<T extends Entry> {
 		return resource.getSimpleName();
 	}
 
-	private <P> void setJSONResponse(HttpServerResponse response, Optional<P> payload) {
-		payload.ifPresentOrElse(
-			queryResult ->
+	private <P> Future<Void> sendJSONResponse(HttpServerResponse response, Optional<P> payload) {
+		return payload
+			.map(queryResult ->
 				response
 					.putHeader("content-type", "application/json; charset=utf-8")
 					.setStatusCode(200)
-					.end(gson.toJson(queryResult)),
-			() -> {
+					.end(gson.toJson(queryResult))
+			)
+			.orElseGet(() ->
 				response
 					.putHeader("content-type", "application/json; charset=utf-8")
 					.setStatusCode(204)
-					.end();
-			}
+					.end()
+			);
+	}
+	
+	private <P extends Collection<T>> Future<Void> sendJSONCollectionResponse(HttpServerResponse response, P payload) {
+		return sendJSONResponse(response, Optional.of(payload).filter(p -> !p.isEmpty()));
+	}
+	
+	private Future<Void> getAll(RoutingContext routingContext) {
+		return data.getAll().flatMap(
+			r -> sendJSONCollectionResponse(routingContext.response(), r)
 		);
 	}
-	
-	private <P extends Collection<T>> void setJSONCollectionResponse(HttpServerResponse response, P payload) {
-		setJSONResponse(response, Optional.of(data.getAll()).filter(p -> !p.isEmpty()));
-	}
-	
-	private void getAll(RoutingContext routingContext) {
-		setJSONCollectionResponse(routingContext.response(), data.getAll());
-	}
 
-	private void getId(RoutingContext routingContext) {
+	private Future<Void> getId(RoutingContext routingContext) {
 		String id = routingContext.request().getParam("id");
 		
-		setJSONCollectionResponse(routingContext.response(), data.getById(id));
+		return data.getById(id).flatMap(
+			r -> sendJSONCollectionResponse(routingContext.response(), r)
+		);
 	}
 
-	private void getIdTime(RoutingContext routingContext) {
+	private Future<Void> getIdTime(RoutingContext routingContext) {
 		String id = routingContext.request().getParam("id");
 		long time = Long.parseLong(routingContext.request().getParam("time"));
 		
-		setJSONResponse(routingContext.response(), data.getByIdAndTime(id, time));
+		return data.getByIdAndTime(id, time).flatMap(
+			r -> sendJSONResponse(routingContext.response(), r)
+		);
 	}
 
-	private void addRecord(RoutingContext routingContext) {
-		int statusCode = 201;
-		
+	private Future<Void> addRecord(RoutingContext routingContext) {
+		Future<T> start;
 		try {
-			String body = routingContext.getBodyAsString();
-			
-			if (body == null || body.equals(""))
-				throw new JsonSyntaxException("The payload for adding an entry cannot be empty");
-			
-			final T newEntry = gson.fromJson(body, resource);
-		
-			data.add(newEntry);
+			start = Future.succeededFuture(bodyToJSON(routingContext.getBodyAsString()));
 		} catch (JsonSyntaxException ex) {
-			statusCode = 400;
+			start = Future.failedFuture(ex);
 		}
 		
-		routingContext
-			.response()
-			.setStatusCode(statusCode)
-			.end();
+		return start
+			.flatMap(data::add)
+			.map(201)
+			.otherwise(ex -> ex instanceof JsonSyntaxException ? 400 : 500)
+			.flatMap(statusCode ->
+				routingContext
+					.response()
+					.setStatusCode(statusCode)
+					.end()
+			);
+	}
+	
+	private T bodyToJSON(String body) throws JsonSyntaxException {
+		if (body == null || body.equals(""))
+			throw new JsonSyntaxException("The payload for adding an entry cannot be empty");
+		
+		return gson.fromJson(body, resource);
 	}
 	
 }

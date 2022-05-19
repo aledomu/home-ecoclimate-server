@@ -3,6 +3,7 @@ package sensor.data.pools;
 import java.util.HashSet;
 import java.util.Set;
 
+import io.vertx.core.Future;
 import sensor.common.DataPool;
 import sensor.common.Entry;
 
@@ -16,13 +17,13 @@ public class LocalNonPersistent<T extends Entry> implements DataPool<T> {
 	private Set<T> pool = new HashSet<T>();
 
 	@Override
-	public Set<T> getAll() {
-		return Set.copyOf(pool);
+	public Future<Set<T>> getAll() {
+		return Future.succeededFuture(Set.copyOf(pool));
 	}
 
 	@Override
-	public boolean add(T e) {
-		return e != null ? pool.add(e) : false;
+	public Future<Boolean> add(T e) {
+		return Future.succeededFuture(e != null ? pool.add(e) : false);
 	}
 
 }
