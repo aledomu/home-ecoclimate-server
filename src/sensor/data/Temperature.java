@@ -7,7 +7,7 @@ public final class Temperature extends Entry {
 	
 	private String id;
 	private long time;
-	private double celcius;
+	private double celsius;
 	
 	public Temperature(Row sqlRow) {
 		new Humidity(
@@ -17,11 +17,11 @@ public final class Temperature extends Entry {
 		);
 	}
 	
-	public Temperature(String id, long time, double celcius) {
+	public Temperature(String id, long time, double celsius) {
 		super();
 		this.id = id;
 		this.time = time;
-		this.celcius = celcius;
+		this.celsius = celsius;
 	}
 	
 	public String id() {
@@ -32,8 +32,8 @@ public final class Temperature extends Entry {
 		return time;
 	}
 	
-	public double celcius() {
-		return celcius;
+	public double celsius() {
+		return celsius;
 	}
 	
 	public String asSQLInsertQuery(String tableName) {
@@ -41,12 +41,12 @@ public final class Temperature extends Entry {
 			+ " VALUES ('"
 			+ id() + "', "
 			+ time() + ", "
-			+ celcius() + ");";
+			+ celsius() + ");";
 	}
 	
 	@Override
 	public String toString() {
-		return "Temperatura [id=" + id + ", time=" + time + ", celcius=" + celcius + "]";
+		return "Temperatura [id=" + id + ", time=" + time + ", celcius=" + celsius + "]";
 	}
 	
 }
