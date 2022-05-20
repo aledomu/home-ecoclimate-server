@@ -21,7 +21,11 @@ import sensor.data.pools.LocalNonPersistent;
 /**
  * Esta clase crea un subrouter por cada tipo de recurso y los une a la raíz
  * de las rutas de la API con el nombre de la clase del tipo de recurso en
- * minúscula como prefijo. 
+ * minúscula como prefijo.
+ * 
+ * Para introducir las credenciales de acceso a la base de datos de MySQL
+ * hay que indicarlas mediante las variables de entorno "HOMEECOCLIMATE_DB_USER"
+ * para el nombre de usuario y "HOMEECOCLIMATE_DB_PASS" para la contraseña
  */
 public class Server extends AbstractVerticle {
 	
