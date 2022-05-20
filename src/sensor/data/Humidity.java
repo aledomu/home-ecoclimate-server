@@ -1,5 +1,6 @@
 package sensor.data;
 
+import io.vertx.sqlclient.Row;
 import sensor.common.Entry;
 
 public final class Humidity extends Entry {
@@ -13,6 +14,14 @@ public final class Humidity extends Entry {
 		this.id = id;
 		this.time = time;
 		this.hectopascal = hectopascal;
+	}
+	
+	public Humidity(Row sqlRow) {
+		new Humidity(
+			sqlRow.getString("ID"),
+			sqlRow.getLong("TIME"),
+			sqlRow.getDouble("HECTOPASCAL")
+		);
 	}
 
 	public String id() {

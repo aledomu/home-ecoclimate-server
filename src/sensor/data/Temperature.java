@@ -1,5 +1,6 @@
 package sensor.data;
 
+import io.vertx.sqlclient.Row;
 import sensor.common.Entry;
 
 public final class Temperature extends Entry {
@@ -7,6 +8,14 @@ public final class Temperature extends Entry {
 	private String id;
 	private long time;
 	private double celcius;
+	
+	public Temperature(Row sqlRow) {
+		new Humidity(
+			sqlRow.getString("ID"),
+			sqlRow.getLong("TIME"),
+			sqlRow.getDouble("CELSIUS")
+		);
+	}
 	
 	public Temperature(String id, long time, double celcius) {
 		super();
