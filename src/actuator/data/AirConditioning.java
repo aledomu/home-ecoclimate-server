@@ -1,5 +1,7 @@
 package actuator.data;
 
+import java.util.Objects;
+
 import actuator.common.Action;
 
 /**
@@ -34,6 +36,24 @@ public final class AirConditioning extends Action {
 
 	public byte ventilationSpeed() {
 		return ventilationSpeed;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id, tempChangeIndex, ventilationSpeed);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		AirConditioning other = (AirConditioning) obj;
+		return Objects.equals(id, other.id) && tempChangeIndex == other.tempChangeIndex
+				&& ventilationSpeed == other.ventilationSpeed;
 	}
 
 	@Override

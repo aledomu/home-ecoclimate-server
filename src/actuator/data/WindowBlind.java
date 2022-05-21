@@ -1,5 +1,7 @@
 package actuator.data;
 
+import java.util.Objects;
+
 import actuator.common.Action;
 
 /**
@@ -25,6 +27,23 @@ public final class WindowBlind extends Action {
 
 	public byte angle() {
 		return angle;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(angle, id);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		WindowBlind other = (WindowBlind) obj;
+		return angle == other.angle && Objects.equals(id, other.id);
 	}
 
 	@Override
