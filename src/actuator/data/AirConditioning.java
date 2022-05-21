@@ -2,13 +2,22 @@ package actuator.data;
 
 import actuator.common.Action;
 
+/**
+ * Acción que representa los ajustes del equipo climatizador.
+ * Los índices son abstractos, por lo que el dispositivo cliente
+ * los puede adaptar a la máquina que realmente controle.
+ */
 public final class AirConditioning extends Action {
 	
 	private String id;
-	private int tempChangeIndex;  // puede ser negativo
-	private int ventilationSpeed;
+	// El prototipo modelará esto con un servo.
+	// El valor será positivo para calentar la estancia
+	// y será negativo para enfriarla.
+	private byte tempChangeIndex;
+	// El prototipo modelará esto con un motor.
+	private byte ventilationSpeed;
 	
-	public AirConditioning(String id, int tempChangeIndex, int ventilationSpeed) {
+	public AirConditioning(String id, byte tempChangeIndex, byte ventilationSpeed) {
 		super();
 		this.id = id;
 		this.tempChangeIndex = tempChangeIndex;
@@ -19,11 +28,11 @@ public final class AirConditioning extends Action {
 		return id;
 	}
 
-	public int tempChangeIndex() {
+	public byte tempChangeIndex() {
 		return tempChangeIndex;
 	}
 
-	public int ventilationSpeed() {
+	public byte ventilationSpeed() {
 		return ventilationSpeed;
 	}
 

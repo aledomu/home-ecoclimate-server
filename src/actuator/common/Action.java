@@ -9,7 +9,7 @@ import java.util.Objects;
 public abstract class Action {
 
 	/**
-	 * @return identificador del sensor que recibe el mensaje de acción.
+	 * @return Identificador del sensor que recibe el mensaje de acción
 	 */
 	abstract public String id();
 	
