@@ -3,6 +3,7 @@ package sensor.common;
 import java.util.Collection;
 import java.util.Optional;
 import java.util.Set;
+import java.util.function.Function;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -25,13 +26,19 @@ public class ResourceHandler<T extends Reading> {
 
 	final private Class<T> resource;
 	final private DataPool<T> data;
+	final Function<Set<T>, Future<Void>> sensorSeriesToMQTT;
 
 	final private Gson gson = new GsonBuilder().create();
 
-	public ResourceHandler(Class<T> resource, DataPool<T> data) {
+	public ResourceHandler(
+		Class<T> resource,
+		DataPool<T> data,
+		Function<Set<T>, Future<Void>> sensorSeriesToMQTT
+	) {
 		super();
 		this.data = data;
 		this.resource = resource;
+		this.sensorSeriesToMQTT = sensorSeriesToMQTT;
 	}
 	
 	/**
@@ -56,7 +63,9 @@ public class ResourceHandler<T extends Reading> {
 	 * <li>
 	 * <b>POST /</b> => Añadir un registro del tipo <b>T</b>. No requiere
 	 * del campo "time" en el cuerpo JSON, aunque si se envía igualmente
-	 * será reescrito por la marca de tiempo del servidor.
+	 * será reescrito por la marca de tiempo del servidor. Cada vez que es
+	 * llamado envía un comando como mensaje MQTT para actualizar el estado
+	 * requerido de los dispositivos de climatización.
 	 * </li>
 	 * </ul>
 	 * 
@@ -152,7 +161,9 @@ public class ResourceHandler<T extends Reading> {
 					.response()
 					.setStatusCode(statusCode)
 					.end()
-			);
+			)
+			.flatMap(x -> data.getLast(60))
+			.flatMap(sensorSeriesToMQTT);
 	}
 	
 	private T bodyToJSON(String body) throws JsonSyntaxException {

@@ -38,6 +38,16 @@
  		<artifactId>vertx-config</artifactId>
  		<version>4.2.6</version>
 	</dependency>
+	<dependency>
+   		<groupId>io.vertx</groupId>
+   		<artifactId>vertx-mqtt</artifactId>
+		<version>4.2.6</version>
+	</dependency>
+	<dependency>
+		<groupId>io.vertx</groupId>
+		<artifactId>vertx-web-client</artifactId>
+		<version>4.2.6</version>
+	</dependency>
   	<dependency>
   		<groupId>com.google.code.gson</groupId>
   		<artifactId>gson</artifactId>
