@@ -5,14 +5,14 @@ import java.util.Set;
 
 import io.vertx.core.Future;
 import sensor.common.DataPool;
-import sensor.common.Entry;
+import sensor.common.Reading;
 
 /**
  * Implementación de una base de datos local genérica en memoria (sin persistencia).
  *
  * @param <T> Cualquier recurso que represente un tipo de sensor
  */
-public class LocalNonPersistent<T extends Entry> implements DataPool<T> {
+public class LocalNonPersistent<T extends Reading> implements DataPool<T> {
 	
 	private Set<T> pool = new HashSet<T>();
 

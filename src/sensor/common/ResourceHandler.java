@@ -20,7 +20,7 @@ import io.vertx.ext.web.handler.BodyHandler;
  * 
  * @param <T> Cualquier recurso que represente un tipo de sensor
  */
-public class ResourceHandler<T extends Entry> {
+public class ResourceHandler<T extends Reading> {
 
 	final private Class<T> resource;
 	final private DataPool<T> data;

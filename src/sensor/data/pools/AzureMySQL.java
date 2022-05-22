@@ -13,9 +13,9 @@ import io.vertx.sqlclient.PoolOptions;
 import io.vertx.sqlclient.Row;
 import io.vertx.sqlclient.SqlResult;
 import sensor.common.DataPool;
-import sensor.common.Entry;
+import sensor.common.Reading;
 
-public class AzureMySQL<T extends Entry> implements DataPool<T> {
+public class AzureMySQL<T extends Reading> implements DataPool<T> {
 
 	final private Function<Row, T> sqlRowMapper;
 	final private MySQLPool mySqlClient;

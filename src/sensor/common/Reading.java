@@ -6,7 +6,7 @@ import java.util.Objects;
  * Clase abstracta que indica los métodos estándar mínimos de cualquier registro
  * de un sensor de la placa.
  */
-public abstract class Entry {
+public abstract class Reading {
 	
 	/**
 	 * @return identificador del sensor que envía la entrada al registro.
@@ -33,7 +33,7 @@ public abstract class Entry {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Entry other = (Entry) obj;
+		Reading other = (Reading) obj;
 		return Objects.equals(id(), other.id()) && time() == other.time();
 	}
 	

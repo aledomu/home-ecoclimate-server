@@ -13,7 +13,7 @@ import io.vertx.core.Future;
  *
  * @param <T> Cualquier recurso que represente un tipo de sensor
  */
-public interface DataPool<T extends Entry> {
+public interface DataPool<T extends Reading> {
 
 	/**
 	 * @return Todos los registros del recurso <b>T</b>

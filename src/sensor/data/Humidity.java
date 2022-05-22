@@ -1,9 +1,9 @@
 package sensor.data;
 
 import io.vertx.sqlclient.Row;
-import sensor.common.Entry;
+import sensor.common.Reading;
 
-public final class Humidity extends Entry {
+public final class Humidity extends Reading {
 	
 	private String id;
 	private long time;

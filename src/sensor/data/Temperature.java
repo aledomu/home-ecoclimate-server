@@ -1,9 +1,9 @@
 package sensor.data;
 
 import io.vertx.sqlclient.Row;
-import sensor.common.Entry;
+import sensor.common.Reading;
 
-public final class Temperature extends Entry {
+public final class Temperature extends Reading {
 	
 	private String id;
 	private long time;
