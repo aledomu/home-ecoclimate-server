@@ -17,7 +17,7 @@ public final class Humidity extends Reading {
 	}
 	
 	public Humidity(Row sqlRow) {
-		new Humidity(
+		this(
 			sqlRow.getString("ID"),
 			sqlRow.getLong("TIME"),
 			sqlRow.getDouble("RATIO")

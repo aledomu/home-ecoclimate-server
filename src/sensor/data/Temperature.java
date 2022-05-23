@@ -17,7 +17,7 @@ public final class Temperature extends Reading {
 	}
 
 	public Temperature(Row sqlRow) {
-		new Humidity(
+		this(
 			sqlRow.getString("ID"),
 			sqlRow.getLong("TIME"),
 			sqlRow.getDouble("CELSIUS")
