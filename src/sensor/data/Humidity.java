@@ -9,20 +9,20 @@ public final class Humidity extends Reading {
 
 	private String id;
 	private long time;
-	private double hectopascal;
+	private double ratio;
 	
-	public Humidity(String id, long time, double hectopascal) {
+	public Humidity(String id, long time, double ratio) {
 		super();
 		this.id = id;
 		this.time = time;
-		this.hectopascal = hectopascal;
+		this.ratio = ratio;
 	}
 	
 	public Humidity(Row sqlRow) {
 		new Humidity(
 			sqlRow.getString("ID"),
 			sqlRow.getLong("TIME"),
-			sqlRow.getDouble("HECTOPASCAL")
+			sqlRow.getDouble("RATIO")
 		);
 	}
 	
@@ -39,11 +39,11 @@ public final class Humidity extends Reading {
 	@SuppressWarnings("unchecked")
 	@Override
 	public Humidity withCurrentTime() {
-		return new Humidity(id(), Instant.now().getEpochSecond(), hectopascal());
+		return new Humidity(id(), Instant.now().getEpochSecond(), ratio());
 	}
 
-	public double hectopascal() {
-		return hectopascal;
+	public double ratio() {
+		return ratio;
 	}
 	
 	public String asSQLInsertQuery(String tableName) {
@@ -51,12 +51,12 @@ public final class Humidity extends Reading {
 			+ " VALUES ('"
 			+ id() + "', "
 			+ time() + ", "
-			+ hectopascal() + ");";
+			+ ratio() + ");";
 	}
 
 	@Override
 	public String toString() {
-		return "Humedad [id=" + id + ", time=" + time + ", hectopascal=" + hectopascal + "]";
+		return "Humedad [id=" + id + ", time=" + time + ", ratio=" + ratio + "]";
 	}
 
 }
