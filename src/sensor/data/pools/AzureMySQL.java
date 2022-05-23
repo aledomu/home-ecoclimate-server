@@ -1,5 +1,6 @@
 package sensor.data.pools;
 
+import java.time.Instant;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Function;
@@ -48,6 +49,17 @@ public class AzureMySQL<T extends Reading> implements DataPool<T> {
 			.collecting(Collectors.mapping(sqlRowMapper, Collectors.toUnmodifiableSet()))
 			.execute()
 			.map(SqlResult::value);
+	}
+	
+	@Override
+	public Future<Set<T>> getLast(long lastSeconds) {
+		long lastTime = Instant.now().getEpochSecond() - lastSeconds;
+		
+		return mySqlClient
+				.query("SELECT * FROM " + tableName + " WHERE TIME >= " + lastTime + ";")
+				.collecting(Collectors.mapping(sqlRowMapper, Collectors.toUnmodifiableSet()))
+				.execute()
+				.map(SqlResult::value);
 	}
 	
 	@Override

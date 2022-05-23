@@ -2,6 +2,7 @@ package sensor.common;
 
 import java.util.Collection;
 import java.util.Optional;
+import java.util.Set;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -39,6 +40,9 @@ public class ResourceHandler<T extends Reading> {
 	 * <ul>
 	 * <li>
 	 * <b>GET /</b> => Recolectar todos los registros de este recurso.
+	 * Si se añade un parámetro de query "lastseconds" con el número
+	 * de segundos a abarcar en la consulta desde ahora al pasado se
+	 * puede limitar el rango temporal.
 	 * </li>
 	 * <li>
 	 * <b>GET /:id</b> => Recolectar todos los registros de este recurso
@@ -96,7 +100,16 @@ public class ResourceHandler<T extends Reading> {
 	}
 	
 	private Future<Void> getAll(RoutingContext routingContext) {
-		return data.getAll().flatMap(
+		Future<Set<T>> query;
+		
+		try {
+			long lastSeconds = Long.parseLong(routingContext.request().getParam("lastseconds"));
+			query = data.getLast(lastSeconds);
+		} catch (Exception ex) {
+			query = data.getAll();
+		}
+		
+		return query.flatMap(
 			r -> sendJSONCollectionResponse(routingContext.response(), r)
 		);
 	}

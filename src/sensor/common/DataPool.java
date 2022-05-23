@@ -1,5 +1,6 @@
 package sensor.common;
 
+import java.time.Instant;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -19,6 +20,18 @@ public interface DataPool<T extends Reading> {
 	 * @return Todos los registros del recurso <b>T</b>
 	 */
 	public Future<Set<T>> getAll();
+	
+	/**
+	 * @param lastSeconds Segundos a abarcar
+	 * @return Todos los registros del recurso <b>T</b> de los últimos
+	 * <b>lastSeconds</b> segundos.
+	 */
+	default public Future<Set<T>> getLast(long lastSeconds) {
+		return getAll().map(r -> {
+			long lastTime = Instant.now().getEpochSecond() - lastSeconds;
+			return r.stream().filter(m -> m.time() >= lastTime).collect(Collectors.toSet());
+		});
+	}
 	
 	/**
 	 * @param id Identificador de las entradas
