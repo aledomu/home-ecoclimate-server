@@ -9,19 +9,19 @@ public final class Temperature extends Reading {
 	
 	private double celsius;
 	
+	public Temperature(String id, long time, double celsius) {
+		super();
+		this.id = id;
+		this.time = time;
+		this.celsius = celsius;
+	}
+
 	public Temperature(Row sqlRow) {
 		new Humidity(
 			sqlRow.getString("ID"),
 			sqlRow.getLong("TIME"),
 			sqlRow.getDouble("CELSIUS")
 		);
-	}
-	
-	public Temperature(String id, long time, double celsius) {
-		super();
-		this.id = id;
-		this.time = time;
-		this.celsius = celsius;
 	}
 	
 	@SuppressWarnings("unchecked")
