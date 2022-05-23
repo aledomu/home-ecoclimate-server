@@ -9,13 +9,20 @@ import java.util.Objects;
 public abstract class Reading {
 	
 	/**
-	 * @return identificador del sensor que envía la entrada al registro.
+	 * @return Identificador del sensor que envía la entrada al registro
 	 */
 	abstract public String id();
+	
 	/**
-	 * @return marca de tiempo de la entrada del registro enviada por el sensor.
+	 * @return Marca de tiempo de la entrada del registro enviada por el sensor
 	 */
 	abstract public long time();
+	
+	/**
+	 * @param <T> Subclase de esta clase abstracta
+	 * @return Lectura con el tiempo modificado a la hora actual
+	 */
+	abstract public <T extends Reading> T withCurrentTime();
 	
 	/**
 	 * @return Consulta de MySQL para insertar este registro en la base de datos.

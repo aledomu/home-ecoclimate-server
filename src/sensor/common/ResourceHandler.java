@@ -54,7 +54,9 @@ public class ResourceHandler<T extends Reading> {
 	 * Debe ser único.
 	 * </li>
 	 * <li>
-	 * <b>POST /</b> => Añadir un registro del tipo <b>T</b>.
+	 * <b>POST /</b> => Añadir un registro del tipo <b>T</b>. No requiere
+	 * del campo "time" en el cuerpo JSON, aunque si se envía igualmente
+	 * será reescrito por la marca de tiempo del servidor.
 	 * </li>
 	 * </ul>
 	 * 
@@ -134,7 +136,9 @@ public class ResourceHandler<T extends Reading> {
 	private Future<Void> addRecord(RoutingContext routingContext) {
 		Future<T> start;
 		try {
-			start = Future.succeededFuture(bodyToJSON(routingContext.getBodyAsString()));
+			start = Future.succeededFuture(
+				bodyToJSON(routingContext.getBodyAsString()).withCurrentTime()
+			);
 		} catch (JsonSyntaxException ex) {
 			start = Future.failedFuture(ex);
 		}
