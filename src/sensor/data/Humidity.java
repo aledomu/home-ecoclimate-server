@@ -7,8 +7,6 @@ import sensor.common.Reading;
 
 public final class Humidity extends Reading {
 
-	private String id;
-	private long time;
 	private double ratio;
 	
 	public Humidity(String id, long time, double ratio) {
@@ -24,16 +22,6 @@ public final class Humidity extends Reading {
 			sqlRow.getLong("TIME"),
 			sqlRow.getDouble("RATIO")
 		);
-	}
-	
-	@Override
-	public String id() {
-		return id;
-	}
-
-	@Override
-	public long time() {
-		return time;
 	}
 	
 	@SuppressWarnings("unchecked")

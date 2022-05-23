@@ -8,15 +8,22 @@ import java.util.Objects;
  */
 public abstract class Reading {
 	
+	protected String id;
+	protected long time;
+	
 	/**
 	 * @return Identificador del sensor que envía la entrada al registro
 	 */
-	abstract public String id();
+	final public String id() {
+		return id;
+	}
 	
 	/**
 	 * @return Marca de tiempo de la entrada del registro enviada por el sensor
 	 */
-	abstract public long time();
+	final public long time() {
+		return time;
+	}
 	
 	/**
 	 * @param <T> Subclase de esta clase abstracta

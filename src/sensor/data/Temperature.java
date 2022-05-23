@@ -2,16 +2,11 @@ package sensor.data;
 
 import java.time.Instant;
 
-import com.google.gson.annotations.Expose;
-
 import io.vertx.sqlclient.Row;
 import sensor.common.Reading;
 
 public final class Temperature extends Reading {
 	
-	private String id;
-	@Expose(deserialize = false)
-	private long time = Instant.now().getEpochSecond();
 	private double celsius;
 	
 	public Temperature(Row sqlRow) {
@@ -27,16 +22,6 @@ public final class Temperature extends Reading {
 		this.id = id;
 		this.time = time;
 		this.celsius = celsius;
-	}
-	
-	@Override
-	public String id() {
-		return id;
-	}
-
-	@Override
-	public long time() {
-		return time;
 	}
 	
 	@SuppressWarnings("unchecked")
