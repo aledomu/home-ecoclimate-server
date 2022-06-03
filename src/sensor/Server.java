@@ -75,8 +75,8 @@ public class Server extends AbstractVerticle {
 		}
 		
 		return Stream.of(
-			new ResourceHandler<>(Humidity.class, humidData, humidCmdPub::sendCmd),
-			new ResourceHandler<>(Temperature.class, tempData, tempCmdPub::sendCmd)
+			new ResourceHandler<>(Humidity.class, humidData, humidCmdPub::sendCmds),
+			new ResourceHandler<>(Temperature.class, tempData, tempCmdPub::sendCmds)
 		);
 	}
 	

@@ -43,8 +43,12 @@ public final class HumidCmdPublisher extends CommandPublisher<Humidity> {
 	}
 
 	@Override
-	protected Future<Void> handleIndex(short fanSpeed) {
-		return publish("fanSpeed", Short.toString(fanSpeed)).map((Void) null);
+	protected Future<Void> handleIndex(String groupId, short fanSpeed) {
+		return publish(
+				groupId + "/fanSpeed",
+				Short.toString(fanSpeed)
+			)
+			.map((Void) null);
 	}
 
 }

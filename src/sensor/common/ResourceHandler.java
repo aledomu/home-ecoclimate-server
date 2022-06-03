@@ -52,12 +52,12 @@ public class ResourceHandler<T extends Reading> {
 	 * puede limitar el rango temporal.
 	 * </li>
 	 * <li>
-	 * <b>GET /:id</b> => Recolectar todos los registros de este recurso
-	 * con el identificador indicado.
+	 * <b>GET /:groupId/:sensorId</b> => Recolectar todos los registros de este recurso
+	 * con los identificadores de grupo y sensor indicados.
 	 * </li>
 	 * <li>
-	 * <b>GET /:id/:time</b> => Devolver el registro de este recurso
-	 * con el identificador y la marca de tiempo indicados.
+	 * <b>GET /:groupId/:sensorId/:time</b> => Devolver el registro de este recurso
+	 * con los identificadores de grupo y sensor y la marca de tiempo indicados.
 	 * Debe ser único.
 	 * </li>
 	 * <li>
@@ -76,8 +76,8 @@ public class ResourceHandler<T extends Reading> {
 		Router router = Router.router(vertx);
 		router.route("/*").handler(BodyHandler.create());
 		router.get("/").handler(this::getAll);
-		router.get("/:id").handler(this::getId);
-		router.get("/:id/:time").handler(this::getIdTime);
+		router.get("/:groupId/:sensorId").handler(this::getId);
+		router.get("/:groupId/:sensorId/:time").handler(this::getIdTime);
 		router.post().handler(this::addRecord);
 		
 		return router;
@@ -126,18 +126,20 @@ public class ResourceHandler<T extends Reading> {
 	}
 
 	private Future<Void> getId(RoutingContext routingContext) {
-		String id = routingContext.request().getParam("id");
+		String groupId = routingContext.request().getParam("groupId");
+		String sensorId = routingContext.request().getParam("sensorId");
 		
-		return data.getById(id).flatMap(
+		return data.getById(groupId, sensorId).flatMap(
 			r -> sendJSONCollectionResponse(routingContext.response(), r)
 		);
 	}
 
 	private Future<Void> getIdTime(RoutingContext routingContext) {
-		String id = routingContext.request().getParam("id");
+		String groupId = routingContext.request().getParam("groupId");
+		String sensorId = routingContext.request().getParam("sensorId");
 		long time = Long.parseLong(routingContext.request().getParam("time"));
 		
-		return data.getByIdAndTime(id, time).flatMap(
+		return data.getByIdAndTime(groupId, sensorId, time).flatMap(
 			r -> sendJSONResponse(routingContext.response(), r)
 		);
 	}

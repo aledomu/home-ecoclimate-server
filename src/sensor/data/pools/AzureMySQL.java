@@ -56,28 +56,37 @@ public class AzureMySQL<T extends Reading> implements DataPool<T> {
 		long lastTime = Instant.now().getEpochSecond() - lastSeconds;
 		
 		return mySqlClient
-				.query("SELECT * FROM " + tableName + " WHERE TIME >= " + lastTime + ";")
+				.query("SELECT * FROM " + tableName + " WHERE time >= " + lastTime + ";")
 				.collecting(Collectors.mapping(sqlRowMapper, Collectors.toUnmodifiableSet()))
 				.execute()
 				.map(SqlResult::value);
 	}
 	
 	@Override
-	public Future<Set<T>> getById(String id) {
+	public Future<Set<T>> getById(String groupId, String sensorId) {
 		return mySqlClient
-			.query("SELECT * FROM " + tableName + " WHERE ID = '" + id + "';")
+			.query(
+				"SELECT * FROM " + tableName
+				+ " WHERE groupId = '" + groupId
+				+ "' AND sensorId = '" + sensorId
+				+ "';")
 			.collecting(Collectors.mapping(sqlRowMapper, Collectors.toUnmodifiableSet()))
 			.execute()
 			.map(SqlResult::value);
 	}
 
 	@Override
-	public Future<Optional<T>> getByIdAndTime(String id, long time) {
+	public Future<Optional<T>> getByIdAndTime(
+		String groupId,
+		String sensorId,
+		long time
+	) {
 		return mySqlClient
 			.query(
 				"SELECT * FROM " + tableName
-				+ " WHERE ID = '" + id
-				+ "' AND TIME = " + time + ";"
+				+ " WHERE groupId = '" + groupId
+				+ "' AND sensorId = '" + sensorId
+				+ "' AND time = " + time + ";"
 			)
 			.execute()
 			.map(r ->

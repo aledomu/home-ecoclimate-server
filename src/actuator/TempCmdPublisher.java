@@ -37,7 +37,7 @@ public final class TempCmdPublisher extends CommandPublisher<Temperature> {
 	}
 
 	@Override
-	final protected Future<Void> handleIndex(short tempCmdIndex) {
+	final protected Future<Void> handleIndex(String groupId, short tempCmdIndex) {
 		byte tempIndex;
 		short angle;
 		if (tempCmdIndex < MIN_TEMP_INDEX_FOR_AC) {
@@ -52,11 +52,11 @@ public final class TempCmdPublisher extends CommandPublisher<Temperature> {
 
 		return CompositeFuture.join(
 				publish(
-					"tempIndex",
+					groupId + "/tempIndex",
 					Byte.toString(tempIndex)
 				),
 				publish(
-					"angle",
+					groupId + "/angle",
 					Short.toString(saturatingCastToUnsignedByte(angle))
 				)
 			)

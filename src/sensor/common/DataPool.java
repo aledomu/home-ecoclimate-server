@@ -37,9 +37,13 @@ public interface DataPool<T extends Reading> {
 	 * @param id Identificador de las entradas
 	 * @return Todos los registros del recurso <b>T</b> con el identificador indicado
 	 */
-	default public Future<Set<T>> getById(String id) {
+	default public Future<Set<T>> getById(String groupId, String sensorId) {
 		return getAll().map(
-			r -> r.stream().filter(e -> e.id().equals(id)).collect(Collectors.toSet())
+			r -> r.stream().filter(e ->
+					e.groupId().equals(groupId)
+					&& e.sensorId().equals(sensorId)
+				)
+				.collect(Collectors.toSet())
 		);
 	}
 	
@@ -49,9 +53,18 @@ public interface DataPool<T extends Reading> {
 	 * @return Registro del recurso <b>T</b> con el identificador
 	 * y la marca de tiempo indicados
 	 */
-	default public Future<Optional<T>> getByIdAndTime(String id, long time) {
+	default public Future<Optional<T>> getByIdAndTime(
+		String groupId,
+		String sensorId,
+		long time
+	) {
 		return getAll().map(
-			r -> r.stream().filter(e -> e.id().equals(id) && e.time() == time).findAny()
+			r -> r.stream().filter(
+					e -> e.groupId().equals(groupId)
+						&& e.sensorId().equals(sensorId)
+						&& e.time() == time
+				)
+				.findAny()
 		);
 	}
 	

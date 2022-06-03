@@ -8,14 +8,29 @@ import java.util.Objects;
  */
 public abstract class Reading {
 	
-	protected String id;
+	protected String groupId;
+	protected String sensorId;
 	protected long time;
+	
+	protected Reading(String groupId, String sensorId, long time) {
+		super();
+		this.groupId = groupId;
+		this.sensorId = sensorId;
+		this.time = time;
+	}
+	
+	/**
+	 * @return Identificador del grupo de sensores que envía la entrada al registro
+	 */
+	final public String groupId() {
+		return groupId;
+	}
 	
 	/**
 	 * @return Identificador del sensor que envía la entrada al registro
 	 */
-	final public String id() {
-		return id;
+	final public String sensorId() {
+		return sensorId;
 	}
 	
 	/**
@@ -37,7 +52,7 @@ public abstract class Reading {
 	abstract public String asSQLInsertQuery(String tableName);
 	
 	final public int hashCode() {
-		return Objects.hash(id(), time());
+		return Objects.hash(groupId(), sensorId(), time());
 	}
 	
 	final public boolean equals(Object obj) {
@@ -48,7 +63,8 @@ public abstract class Reading {
 		if (getClass() != obj.getClass())
 			return false;
 		Reading other = (Reading) obj;
-		return Objects.equals(id(), other.id()) && time() == other.time();
+		return Objects.equals(groupId(), other.groupId())
+				&& Objects.equals(sensorId(), other.sensorId()) && time() == other.time();
 	}
 	
 }
