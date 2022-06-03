@@ -72,6 +72,6 @@ public interface DataPool<T extends Reading> {
 	 * @param elem Entrada a añadir al registro
 	 * @return <b>true</b> si se ha añadido el elemento, <b>false</b> si no
 	 */
-	public Future<Boolean> add(T elem);
+	public Future<Void> add(T elem);
 
 }

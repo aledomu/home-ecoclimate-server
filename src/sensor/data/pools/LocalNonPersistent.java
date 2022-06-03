@@ -22,8 +22,14 @@ public class LocalNonPersistent<T extends Reading> implements DataPool<T> {
 	}
 
 	@Override
-	public Future<Boolean> add(T e) {
-		return Future.succeededFuture(e != null ? pool.add(e) : false);
+	public Future<Void> add(T e) {
+		try {
+			return pool.add(e)
+				? Future.succeededFuture()
+				: Future.failedFuture("No se ha podido añadir el elemento " + e);
+		} catch (Throwable t) {
+			return Future.failedFuture(t);
+		}
 	}
 
 }

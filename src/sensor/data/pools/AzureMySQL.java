@@ -98,15 +98,11 @@ public class AzureMySQL<T extends Reading> implements DataPool<T> {
 	}
 	
 	@Override
-	public Future<Boolean> add(T elem) {
+	public Future<Void> add(T elem) {
 		return mySqlClient
 			.query(elem.asSQLInsertQuery(tableName))
 			.execute()
-			.map(true)
-			.otherwise(t -> {
-				System.err.println(t);
-				return false;
-			});
+			.map((Void) null);
 	}
 
 }
