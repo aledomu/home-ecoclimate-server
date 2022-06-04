@@ -56,7 +56,7 @@ public abstract class CommandPublisher<T extends Reading> {
 	 */
 	final protected Future<Integer> publish(String cmdType, String content) {
 		return client.publish(
-			"fanSpeed",
+			cmdType,
 			Buffer.buffer(content),
 			MqttQoS.AT_LEAST_ONCE,
 			false,
