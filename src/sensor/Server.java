@@ -28,8 +28,14 @@ import sensor.data.pools.LocalNonPersistent;
  * minúscula como prefijo.
  * 
  * Para introducir las credenciales de acceso a la base de datos de MySQL
- * hay que indicarlas mediante las variables de entorno "HOMEECOCLIMATE_DB_USER"
- * para el nombre de usuario y "HOMEECOCLIMATE_DB_PASS" para la contraseña
+ * hay que indicarlas mediante las variables de entorno <b>HOMEECOCLIMATE_DB_USER</b>
+ * para el nombre de usuario y <b>HOMEECOCLIMATE_DB_PASS</b> para la contraseña.
+ * 
+ * Se puede modificar la dirección y puerto por defecto del broker MQTT al
+ * que se conectará el servidor, que son <b>localhost</b> y <b>1883</b>
+ * respectivamente, con las variables de entorno <b>HOMEECOCLIMATE_MQTT_ADDRESS"</b>
+ * y <b>HOMEECOCLIMATE_MQTT_PORT</b>. <em>Si el servidor no puede conectarse al
+ * broker no se iniciará.</em>
  */
 public class Server extends AbstractVerticle {
 	
@@ -37,13 +43,22 @@ public class Server extends AbstractVerticle {
 	
 	@Override
 	public void start(Promise<Void> startFuture) {
+		client = MqttClient.create(getVertx());
 		ConfigRetrieverOptions opts = new ConfigRetrieverOptions()
 			.addStore(new ConfigStoreOptions().setType("env"));
 		
 		ConfigRetriever.create(getVertx(), opts)
 			.getConfig()
-			.map(this::configToResourceHandlers)
-			.flatMap(this::publishResourceHandlers)
+			.flatMap(config ->
+				client
+					.connect(
+						config.getInteger("HOMEECOCLIMATE_MQTT_PORT", 1883),
+						config.getString("HOMEECOCLIMATE_MQTT_ADDRESS", "localhost")
+					)
+					.map(config)
+					.map(this::configToResourceHandlers)
+					.flatMap(this::publishResourceHandlers)
+			)
 			.onSuccess(x -> startFuture.complete())
 			.onFailure(startFuture::fail);
 	}
@@ -51,9 +66,6 @@ public class Server extends AbstractVerticle {
 	private Stream<ResourceHandler<?>> configToResourceHandlers(JsonObject config) {
 		final String dbUser = config.getString("HOMEECOCLIMATE_DB_USER");
 		final String dbPass = config.getString("HOMEECOCLIMATE_DB_PASS");
-		
-		client = MqttClient.create(getVertx());
-		client.connect(1883, "localhost");
 		
 		TempCmdPublisher tempCmdPub = new TempCmdPublisher(client);
 		HumidCmdPublisher humidCmdPub = new HumidCmdPublisher(client);
