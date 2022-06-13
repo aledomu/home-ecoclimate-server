@@ -34,7 +34,8 @@ public interface DataPool<T extends Reading> {
 	}
 	
 	/**
-	 * @param id Identificador de las entradas
+	 * @param groupId	Identificador de grupo de la entrada
+	 * @param sensorId	Identificador de sensor de la entrada
 	 * @return Todos los registros del recurso <b>T</b> con el identificador indicado
 	 */
 	default public Future<Set<T>> getById(String groupId, String sensorId) {
@@ -48,8 +49,9 @@ public interface DataPool<T extends Reading> {
 	}
 	
 	/**
-	 * @param id	Identificador de la entrada
-	 * @param time	Marca de tiempo de la entrada
+	 * @param groupId	Identificador de grupo de la entrada
+	 * @param sensorId	Identificador de sensor de la entrada
+	 * @param time		Marca de tiempo de la entrada
 	 * @return Registro del recurso <b>T</b> con el identificador
 	 * y la marca de tiempo indicados
 	 */

@@ -16,6 +16,8 @@ import sensor.common.Reading;
 
 /**
  * Clase abstracta a implementar por cada tipo de lectura de sensor
+ * para enviar los comandos MQTT que correspondan separados por
+ * ID de grupo.
  * 
  * @param <T> Cualquier recurso que represente un tipo de sensor
  */
@@ -67,7 +69,7 @@ public abstract class CommandPublisher<T extends Reading> {
 	
 	/**
 	 * @param series Serie de datos tomados en bruto desde la base de datos
-	 * @return Operación asíncrona tras enviar el comando
+	 * @return Operación asíncrona tras enviar los comandos apropiados
 	 */
 	final public Future<Void> sendCmds(Set<T> series) {
 		return series.stream()

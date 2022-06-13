@@ -40,7 +40,7 @@ public final class TempCmdPublisher extends CommandPublisher<Temperature> {
 	final protected Future<Void> handleIndex(String groupId, short tempCmdIndex) {
 		byte tempIndex;
 		short angle;
-		if (tempCmdIndex < MIN_TEMP_INDEX_FOR_AC) {
+		if (tempCmdIndex >= MIN_TEMP_INDEX_FOR_AC) {
 			tempIndex = (byte) (tempCmdIndex - 50);
 			angle = MAX_WB_ANGLE;
 		} else {

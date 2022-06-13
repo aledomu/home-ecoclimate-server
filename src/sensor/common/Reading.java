@@ -47,6 +47,7 @@ public abstract class Reading {
 	abstract public <T extends Reading> T withCurrentTime();
 	
 	/**
+	 * @param tableName Nombre de la tabla donde insertar esta lectura
 	 * @return Consulta de MySQL para insertar este registro en la base de datos.
 	 */
 	abstract public String asSQLInsertQuery(String tableName);
