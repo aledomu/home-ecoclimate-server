@@ -14,7 +14,7 @@ public final class TempCmdPublisher extends CommandPublisher<Temperature> {
 	final private static double TEMPERATURE_THRESHOLD = 24.0;
 	final private static short MIN_TEMP_INDEX_FOR_AC = 60;
 	final private static byte MIN_TEMP_INDEX_FOR_HEATER = -60;
-	final private static short MAX_WB_ANGLE = (short) (MIN_TEMP_INDEX_FOR_AC * 4);
+	final private static byte MAX_WB_ANGLE = Byte.MAX_VALUE;
 	
 	public TempCmdPublisher(MqttClient client) {
 		super(client);
