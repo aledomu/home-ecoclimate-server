@@ -56,10 +56,10 @@ public class AzureMySQL<T extends Reading> implements DataPool<T> {
 		long lastTime = Instant.now().getEpochSecond() - lastSeconds;
 		
 		return mySqlClient
-				.query("SELECT * FROM " + tableName + " WHERE time >= " + lastTime + ";")
-				.collecting(Collectors.mapping(sqlRowMapper, Collectors.toUnmodifiableSet()))
-				.execute()
-				.map(SqlResult::value);
+			.query("SELECT * FROM " + tableName + " WHERE time >= " + lastTime + ";")
+			.collecting(Collectors.mapping(sqlRowMapper, Collectors.toUnmodifiableSet()))
+			.execute()
+			.map(SqlResult::value);
 	}
 	
 	@Override
